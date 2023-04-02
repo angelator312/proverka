@@ -1,0 +1,15 @@
+{
+  "name": "@angelator312/proverka",
+  "version": "1.0.0",
+  "description": "Проверка за НОИ като в арена олимпиици!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "проверка",
+    "олимпияда"
+  ],
+  "author": "Ангел Раев и Светлозар Аргиров",
+  "license": "ISC"
+}
