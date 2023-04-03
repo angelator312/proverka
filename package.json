@@ -1,5 +1,5 @@
 {
-  "name": "@angelator312/proverka",
+  "name": "@angelator312/noi-proverka",
   "version": "1.0.0",
   "description": "Проверка за НОИ като в арена олимпиици!",
   "main": "noi-proverka.js",
