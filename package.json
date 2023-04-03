@@ -2,9 +2,12 @@
   "name": "@angelator312/proverka",
   "version": "1.0.0",
   "description": "Проверка за НОИ като в арена олимпиици!",
-  "main": "index.js",
+  "main": "noi-proverka.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "noi-proverka": "noi-proverka.js"
   },
   "keywords": [
     "проверка",
@@ -16,4 +19,5 @@
     "cliui": "^8.0.1",
     "nodemon": "^2.0.22"
   }
+
 }

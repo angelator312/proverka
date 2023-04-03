@@ -4,7 +4,6 @@ const exec = util.promisify(require("node:child_process").exec);
 const param = process.argv[2];
 const fs = require("fs/promises");
 const ui = require("cliui")();
-let errorInCompiling=false;
 
 async function compile(dir) {
   try {
