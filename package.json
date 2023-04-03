@@ -11,5 +11,9 @@
     "олимпияда"
   ],
   "author": "Ангел Раев и Светлозар Аргиров",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cliui": "^8.0.1",
+    "nodemon": "^2.0.22"
+  }
 }

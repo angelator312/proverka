@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 const util = require("node:util");
-const spawn = util.promisify(require("node:child_process").spawn);
 const exec = util.promisify(require("node:child_process").exec);
 const param = process.argv[2];
 const fs = require("fs/promises");
-const stream = require("stream");
+const ui = require("cliui")();
+let errorInCompiling=false;
 
 async function compile(dir) {
   try {
@@ -20,14 +20,17 @@ async function compile(dir) {
     );
     return;
   }
-  const { stdout, stderr } = await exec(
-    `clang++ ${dir}/solution.cpp -o ${dir}/solution`
-  );
-  if (stderr) {
+  try {
+    const { stdout, stderr } = await exec(
+      `clang++ ${dir}/solution.cpp -o ${dir}/solution`
+    );
+  } catch (err) {
     console.error("Error in compiling cpp file!!!");
+    console.error(err.stderr);
     return;
   }
   console.log("Compiling is done!!!");
+  return true;
 }
 async function test(dir) {
   try {
@@ -40,19 +43,22 @@ async function test(dir) {
   }
   const testsList = (await fs.readdir(`${dir}/tests/`))
     .filter((t) => t.endsWith(".in"))
-    .map((e)=>e.substring(0,e.length-3));
+    .map((e) => e.substring(0, e.length - 3));
   for (const i of testsList) {
-    const fSol=(await fs.readFile(`${dir}/tests/${i}.sol`)).toString();
-    const { stdout, stderr } = await exec(
-        ` ${dir}/solution < ${dir}/tests/${i}.in`
-      );
+    const fSol = (await fs.readFile(`${dir}/tests/${i}.sol`)).toString().trim();
+    let { stdout, stderr } = await exec(
+      ` ${dir}/solution < ${dir}/tests/${i}.in`
+    );
+    stdout = stdout.trim();
     //console.log(stdout);
-    if(stdout.trim()==fSol.trim())console.log(`${i} : Done test `);
-    else console.log(`${i} : Failed test `);
+    if (stdout == fSol)
+      ui.div({ text: i, width: 15 }, { text: "✅", width: 3 }, stdout, fSol);
+    else ui.div({ text: i, width: 15 }, { text: "❌", width: 3 }, stdout, fSol);
   }
+  console.log(ui.toString());
 }
 async function main() {
-  await compile(param);
-  await test(param);
+  if(await compile(param))
+    await test(param);
 }
 main();
